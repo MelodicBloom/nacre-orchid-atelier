@@ -1,0 +1,118 @@
+{
+  "schema_name": "DeterministicInquiryEngine",
+  "version": "1.0.0",
+  "entity": {
+    "id": "nacre-gate",
+    "name": "Nacre Gate",
+    "entity_type": "interaction",
+    "scope": "concept",
+    "description": "A responsive interface threshold that reveals value gradually through proximity and reflected attention."
+  },
+  "layers": {
+    "essence": {
+      "core_metaphor": "a tide-polished threshold that opens by recognition, not force",
+      "governing_noun": "threshold",
+      "governing_verb": "unfurl",
+      "felt_center": "guarded luminosity",
+      "one_sentence_thesis": "A responsive interface that reveals value gradually through proximity, trust, and reflected attention."
+    },
+    "semantic_axes": [
+      {
+        "axis_id": "revealed_concealed",
+        "left_pole": "revealed",
+        "right_pole": "concealed",
+        "position": 0.68,
+        "confidence": 0.83,
+        "evidence": ["unfolds over time", "recognition before access", "value not immediately exposed"]
+      },
+      {
+        "axis_id": "organic_engineered",
+        "left_pole": "organic",
+        "right_pole": "engineered",
+        "position": 0.42,
+        "confidence": 0.76,
+        "evidence": ["tide-polished metaphor", "soft deformation", "still rule-based and structured"]
+      },
+      {
+        "axis_id": "intimate_monumental",
+        "left_pole": "intimate",
+        "right_pole": "monumental",
+        "position": 0.35,
+        "confidence": 0.80,
+        "evidence": ["invites approach", "proximity-based", "personal scale"]
+      },
+      {
+        "axis_id": "protective_exposing",
+        "left_pole": "protective",
+        "right_pole": "exposing",
+        "position": 0.28,
+        "confidence": 0.71,
+        "evidence": ["guards its value", "reveals selectively", "shields content until trust is established"]
+      },
+      {
+        "axis_id": "tactile_spectral",
+        "left_pole": "tactile",
+        "right_pole": "spectral",
+        "position": 0.60,
+        "confidence": 0.72,
+        "evidence": ["nacre is physical", "but the shimmer is light-based", "it occupies both registers"]
+      },
+      {
+        "axis_id": "stable_volatile",
+        "left_pole": "stable",
+        "right_pole": "volatile",
+        "position": 0.38,
+        "confidence": 0.78,
+        "evidence": ["responds but doesn't break", "absorbs and redistributes under stress", "returns to equilibrium"]
+      }
+    ],
+    "negative_definition": {
+      "is_not": ["a blunt dashboard", "a maximalist ornament dump", "a glass wall with no filter"],
+      "rejects": ["instant full disclosure", "hard-edged mechanical transitions", "uniform density with no rhythm"],
+      "anti_examples": ["a loading spinner that feels like a barrier", "a parallax effect with no semantic purpose"],
+      "failure_modes": ["feels merely decorative", "becomes precious but unusable", "the unfolding takes too long and the user leaves"]
+    },
+    "behavior": {
+      "idle_state": "Subtle nacre shimmer — a faint iridescent gradient sweep that suggests life without demanding attention.",
+      "responsive_state": "Light follows the cursor; iridescence shifts with viewing angle; surface brightens near the pointer.",
+      "stress_state": "Under rapid input or overload, shimmer intensifies but never breaks — it absorbs and redistributes.",
+      "recovery_state": "Gradual easing back to idle over 800ms using a couture deceleration curve.",
+      "adaptation_style": "bloom"
+    },
+    "symbolism": {
+      "archetype": "The Guardian Threshold",
+      "lore_role": "Tests the seeker's patience and attention before revealing what lies beyond.",
+      "material_associations": ["abalone shell", "sea glass", "tide-polished stone", "moonlit water"],
+      "symbolic_pairs": ["nacre + gold leaf", "patience + reward", "concealment + revelation"],
+      "cultural_resonances": ["Japanese shoji screens", "Celtic thin places", "Venetian water-gates"]
+    },
+    "composition": {
+      "symmetry_type": "bilateral",
+      "dominant_structure": "A central focal panel flanked by quieter fields that frame without competing.",
+      "contrast_style": "light",
+      "rhythm_type": "bloom",
+      "hierarchy_logic": "Center carries the weight; edges support without competing."
+    },
+    "relationships": {
+      "allies": ["Pearl Bloom microinteraction", "Iridescent Sweep", "Nacre Shimmer ambient"],
+      "opposites": ["Onyx Reveal", "Prism Burst"],
+      "dependencies": ["cursor proximity tracking", "prefers-reduced-motion fallback", "WebGL or CSS gradient fallback"],
+      "bridges": ["connects material physics to access control", "connects visual atmosphere to trust logic"],
+      "container_system": "Nacre Orchid Atelier design system"
+    },
+    "implementation_translation": {
+      "token_domains": ["color.turquoise", "color.champagne", "motion.couture", "effect.glow.pearl", "shadow.pearl"],
+      "component_implications": ["MaterialSurface with mother-of-pearl shader", "progressive disclosure wrapper", "cursor proximity hook"],
+      "interaction_rules": ["intensity scales with proximity", "access granted after dwell threshold", "reduced motion: static gradient fallback"],
+      "rendering_constraints": ["WebGL with CSS fallback", "max 2 active shader instances per viewport", "IntersectionObserver gate"],
+      "documentation_required": ["TOKEN_SPEC for pearl glow tokens", "SHADER_SPEC for mother-of-pearl uniform interface", "ACCESSIBILITY_SPEC for reduced-motion fallback"]
+    }
+  },
+  "metadata": {
+    "created_at": "2026-07-08T17:30:00Z",
+    "author": "MelodicBloom",
+    "session_id": "inquiry-001",
+    "inquiry_version": "1.0.0",
+    "tags": ["nacre-orchid", "interaction", "threshold", "concept"]
+  }
+}
