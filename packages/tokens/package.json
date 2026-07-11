@@ -1,0 +1,29 @@
+{
+  "name": "@nacre/tokens",
+  "version": "0.0.1",
+  "description": "Design token pipeline — nacre-inquiry-engine profile JSON → CSS vars, JS/ESM constants, Tailwind config",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
+      "require": { "types": "./dist/index.d.cts", "default": "./dist/index.cjs" }
+    },
+    "./css": "./dist/tokens.css",
+    "./tailwind": "./dist/tailwind.config.js"
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts --clean",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "generate": "node scripts/generate.js"
+  },
+  "devDependencies": {
+    "style-dictionary": "^4.0.0",
+    "tsup": "^8.0.0",
+    "vitest": "^1.6.0",
+    "zod": "^3.23.0"
+  }
+}
