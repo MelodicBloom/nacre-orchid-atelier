@@ -1,0 +1,35 @@
+{
+  "id": "nacre-pearl-bloom",
+  "family": "nacre",
+  "displayName": "Pearl Bloom",
+  "description": "Mother-of-pearl thin-film iridescence. A bilateral surface that blooms with proximity and settles back to a subtle shimmer at idle. Derived from the nacre-gate inquiry profile.",
+  "aestheticIntent": "guarded luminosity — reveals iridescence gradually through proximity, never demanding attention",
+  "sourceProfile": "nacre-gate",
+  "sourceProfileVersion": "1.0.0",
+  "tier": "webgl2",
+  "fallbackTier": "css",
+  "contextBudget": 1,
+  "motionBasis": {
+    "rhythmType": "bloom",
+    "adaptationStyle": "bloom",
+    "baseDurationMs": 600,
+    "easing": "cubic-bezier(0, 0, 0.2, 1)"
+  },
+  "uniforms": {
+    "u_time":           { "type": "float",  "range": [0, 1e9],  "default": 0,           "description": "Elapsed time in seconds. Driver for shimmer animation." },
+    "u_resolution":     { "type": "vec2",   "range": null,      "default": [1, 1],      "description": "Canvas dimensions in pixels [width, height]." },
+    "u_pointer":        { "type": "vec2",   "range": [0, 1],    "default": [0.5, 0.5],  "description": "Normalised pointer position [0-1, 0-1]. Drives proximity bloom." },
+    "u_intensity":      { "type": "float",  "range": [0, 1],    "default": 0.72,        "description": "Overall material intensity. Derived from revealed_concealed axis (1 - position)." },
+    "u_iridescence":    { "type": "float",  "range": [0, 1],    "default": 0.60,        "description": "Thin-film iridescence strength. Derived from tactile_spectral axis position." },
+    "u_shimmerOpacity": { "type": "float",  "range": [0, 1],    "default": 0.12,        "description": "Idle shimmer opacity. From nacre-effect-shimmer-opacity token." },
+    "u_baseColor":      { "type": "vec3",   "range": [0, 1],    "default": [0.92, 0.93, 0.95], "description": "Base surface RGB (linearised from hsl). Derived from color.surface.0 token." },
+    "u_accentColor":    { "type": "vec3",   "range": [0, 1],    "default": [0.68, 0.52, 0.82], "description": "Accent bloom RGB (linearised). Derived from color.material.orchid token." },
+    "u_reducedMotion":  { "type": "float",  "range": [0, 1],    "default": 0,           "description": "1.0 = prefers-reduced-motion active. Freezes time-dependent uniforms." }
+  },
+  "failureModes": [
+    "feels merely decorative if u_intensity is pushed above 0.9 without pointer tracking",
+    "becomes precious but unusable if shimmer speed drops below 800ms",
+    "unfolding takes too long if bloom base duration exceeds 1200ms"
+  ],
+  "tokenDomains": ["color.turquoise", "color.champagne", "motion.couture", "effect.glow.pearl", "shadow.pearl"]
+}

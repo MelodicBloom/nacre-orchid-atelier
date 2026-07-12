@@ -1,0 +1,14 @@
+{
+  "_description": "Reference uniform values for nacre-pearl-bloom at seed 42, derived from the nacre-gate inquiry profile. Used as a deterministic test fixture.",
+  "_profileId": "nacre-gate",
+  "_seed": 42,
+  "u_time": 0,
+  "u_resolution": [800, 600],
+  "u_pointer": [0.5, 0.5],
+  "u_intensity": 0.72,
+  "u_iridescence": 0.60,
+  "u_shimmerOpacity": 0.12,
+  "u_baseColor": [0.92, 0.93, 0.95],
+  "u_accentColor": [0.68, 0.52, 0.82],
+  "u_reducedMotion": 0
+}
