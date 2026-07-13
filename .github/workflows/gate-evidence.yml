@@ -1,0 +1,79 @@
+name: Gate Evidence
+
+# Fires when the CI workflow completes on main.
+# On success: writes a verified ci.completed evidence event to qt314wink/seed-loom.
+# On failure: skips (failures are tracked via Gate 1 issue, not ledger events).
+#
+# REQUIRED SECRET: SEED_LOOM_TOKEN
+#   A GitHub PAT or fine-grained token with Contents: Read & Write
+#   access to qt314wink/seed-loom. Set in this repo's Settings > Secrets.
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+
+jobs:
+  record-evidence:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: qt314wink/seed-loom
+          token: ${{ secrets.SEED_LOOM_TOKEN }}
+          path: ledger
+
+      - name: Build and write evidence event
+        id: build-event
+        run: |
+          TIMESTAMP=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          DATE_PATH=$(date -u +%Y-%m)
+          SHA="${{ github.event.workflow_run.head_sha }}"
+          SHORT_SHA="${SHA:0:8}"
+          RUN_URL="${{ github.event.workflow_run.html_url }}"
+          EVENT_ID="evt_$(date -u +%Y%m%d%H%M%S)_${SHORT_SHA}"
+
+          mkdir -p "ledger/portfolio/evidence/${DATE_PATH}"
+
+          cat > "ledger/portfolio/evidence/${DATE_PATH}/${EVENT_ID}.json" << EOF
+          {
+            "event_id": "${EVENT_ID}",
+            "schema_version": "v1",
+            "event_type": "ci.completed",
+            "occurred_at": "${TIMESTAMP}",
+            "asset": {
+              "provider": "github",
+              "owner": "MelodicBloom",
+              "repo": "nacre-orchid-atelier",
+              "commit_sha": "${SHA}",
+              "ref": "${{ github.event.workflow_run.head_branch }}"
+            },
+            "workflow": {
+              "name": "${{ github.event.workflow_run.name }}",
+              "run_id": "${{ github.event.workflow_run.id }}",
+              "run_url": "${RUN_URL}",
+              "conclusion": "${{ github.event.workflow_run.conclusion }}"
+            },
+            "actor": {
+              "type": "workflow",
+              "id": "gate-evidence/${{ github.run_id }}"
+            },
+            "confidence": "verified"
+          }
+          EOF
+
+          echo "event_id=${EVENT_ID}" >> "$GITHUB_OUTPUT"
+          echo "date_path=${DATE_PATH}" >> "$GITHUB_OUTPUT"
+
+      - name: Commit evidence to ledger
+        run: |
+          cd ledger
+          git config user.name  "gate-evidence[bot]"
+          git config user.email "gate-evidence@users.noreply.github.com"
+          git add portfolio/evidence/
+          git diff --staged --quiet \
+            && echo "Nothing to commit (event already recorded)" \
+            || git commit -m "evidence: nacre-orchid-atelier CI pass ${{ steps.build-event.outputs.event_id }}"
+          git push
