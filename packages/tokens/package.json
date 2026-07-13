@@ -18,7 +18,8 @@
     "build": "tsup src/index.ts --format esm,cjs --dts --clean",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "generate": "node scripts/generate.js"
+    "generate": "node scripts/generate.js",
+    "validate:profile": "node scripts/validate-example-profile.mjs"
   },
   "devDependencies": {
     "style-dictionary": "^4.0.0",

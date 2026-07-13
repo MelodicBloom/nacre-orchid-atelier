@@ -84,12 +84,13 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npx attw --pack packages/tokens
-        continue-on-error: false
+      - run: npx attw --pack packages/shaders
 
   # ── 6. Profile Schema Validation ───────────────────────────────────────────
   validate-profile:
     name: Validate Inquiry Profile
     runs-on: ubuntu-latest
+    needs: build
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -97,21 +98,9 @@ jobs:
           node-version: '20'
           cache: 'npm'
       - run: npm ci
+      - run: npm run build
       - name: Validate example profile against schema
-        run: |
-          node -e "
-            import('./packages/tokens/src/pipeline/validate-profile.js').then(({ validateProfile }) => {
-              const fs = await import('fs');
-              // Validates the committed example profile from nacre-inquiry-engine
-              const profile = JSON.parse(fs.readFileSync('packages/tokens/fixtures/example-profile.json', 'utf-8'));
-              const result = validateProfile(profile);
-              if (!result.valid) {
-                console.error('Profile validation failed:', result.errors);
-                process.exit(1);
-              }
-              console.log('Profile valid.');
-            });
-          "
+        run: npm run validate:profile --workspace=packages/tokens
 
   # ── 7. Gate Status Check ───────────────────────────────────────────────────
   gate-check:
