@@ -1,0 +1,4 @@
+# This directory holds committed reference render PNGs for visual regression.
+# Run the capture scripts in packages/shaders/scripts/ to generate them.
+# Headless:   node packages/shaders/scripts/capture-reference-headless.js
+# Playwright: npx ts-node packages/shaders/scripts/render-reference-playwright.ts

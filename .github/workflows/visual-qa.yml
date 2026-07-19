@@ -1,0 +1,76 @@
+# visual-qa.yml
+#
+# Visual regression CI for nacre-pearl-bloom.
+# Triggered only when the shader GLSL, token mapper, or uniform pipeline changes.
+#
+# STATUS: uniform contract tests are active.
+#         Pixel-diff step is COMMENTED OUT — promote after reference PNGs are committed.
+#         See packages/shaders/src/__tests__/visual-regression.test.ts PROMOTION GUIDE.
+
+name: Visual QA
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'packages/shaders/src/presets/nacre-pearl-bloom.frag.glsl'
+      - 'packages/shaders/src/uniforms/tokens-to-uniforms.ts'
+      - 'packages/tokens/src/pipeline/profile-to-tokens.ts'
+      - '.github/qa-assets/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'packages/shaders/src/presets/nacre-pearl-bloom.frag.glsl'
+      - 'packages/shaders/src/uniforms/tokens-to-uniforms.ts'
+      - 'packages/tokens/src/pipeline/profile-to-tokens.ts'
+
+jobs:
+  visual-regression:
+    name: nacre-pearl-bloom visual regression
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install system GL libraries (for headless-gl)
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q libgl1-mesa-dev libxi-dev xvfb
+
+      - name: Run uniform contract + regression presence tests
+        run: npm test --workspace=packages/shaders -- --reporter=verbose
+
+      # ── PROMOTE BELOW after reference PNGs are committed ────────────────────────────
+      # - name: Generate headless render (actual)
+      #   run: node packages/shaders/scripts/capture-reference-headless.js
+      #
+      # - name: Pixel-diff comparison
+      #   run: npx ts-node packages/shaders/scripts/compare-pixel-diff.ts
+      #
+      # - name: Upload diff artifact on failure
+      #   if: failure()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: visual-diff
+      #     path: .github/qa-assets/nacre-pearl-bloom-diff.png
+      # ── END PROMOTE ───────────────────────────────────────────────────────────────────
+
+      - name: Step summary
+        if: always()
+        run: |
+          echo "## Visual QA" >> $GITHUB_STEP_SUMMARY
+          echo "| Check | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|---|---|" >> $GITHUB_STEP_SUMMARY
+          echo "| Uniform contract tests | ✅ Active |" >> $GITHUB_STEP_SUMMARY
+          echo "| Pixel-diff comparison | ⏳ Pending — commit reference PNGs first |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "To promote: run both capture scripts, commit the PNGs, then uncomment the pixel-diff step." >> $GITHUB_STEP_SUMMARY
