@@ -1,0 +1,12 @@
+:root{color-scheme:light;font-family:ui-serif,Georgia,serif;background:radial-gradient(circle at 20% 0%,#f6eef7,#e9eef5 45%,#f3efe8);color:#2c2633}
+body{margin:0}main{max-width:1100px;margin:0 auto;padding:48px 24px}
+.eyebrow{letter-spacing:.2em;text-transform:uppercase;font-size:12px;color:#8a6f93}h1{font-size:56px;margin:.1em 0;font-weight:500}
+.lede{font-size:20px;max-width:720px}.meta{font-family:ui-monospace,monospace;font-size:13px}.meta input{width:70px;margin-left:6px}
+.stage>div{min-height:420px;border-radius:28px;overflow:hidden;display:flex;align-items:flex-end;box-shadow:0 30px 80px -30px #6b4f7a66}
+.surface-copy{padding:32px;backdrop-filter:blur(2px)}.surface-copy h2{margin:0;font-weight:500}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px;margin-top:28px}
+.card{background:#ffffffb0;border:1px solid #ffffff;border-radius:18px;padding:18px;box-shadow:0 10px 30px -18px #6b4f7a55}
+.card h3{margin:0 0 10px;text-transform:capitalize;font-weight:500}.swatch{display:flex;gap:10px;align-items:center;font-size:12px;margin:6px 0}
+.swatch span{width:28px;height:28px;border-radius:50%;border:1px solid #0001}.swatch em{margin-left:auto;color:#7a7085}
+.axis{display:grid;grid-template-columns:1fr 100px 40px;gap:8px;font-size:13px;margin:6px 0}pre{font-size:12px;white-space:pre-wrap}
+footer{margin-top:40px;font-size:13px;color:#6d6375}a{color:#7b4d8c}

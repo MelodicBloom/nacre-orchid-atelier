@@ -46,9 +46,9 @@ function hslToLinearRgb(hsl: string): readonly [number, number, number] {
   );
   if (!m) return NACRE_PEARL_BLOOM_DEFAULTS.u_baseColor;
 
-  const h = parseFloat(m[1]) / 360;
-  const s = parseFloat(m[2]) / 100;
-  const l = parseFloat(m[3]) / 100;
+  const h = parseFloat(m[1]!) / 360;
+  const s = parseFloat(m[2]!) / 100;
+  const l = parseFloat(m[3]!) / 100;
 
   // HSL -> sRGB
   const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
