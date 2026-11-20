@@ -40,7 +40,11 @@ export function profileToTokens(profile: NacreProfile, seed: number = 42): Nacre
       enter: buildMotionToken('enter', composition?.rhythm_type, behavior?.adaptation_style),
       exit: buildMotionToken('exit', composition?.rhythm_type, behavior?.adaptation_style),
       idle: buildMotionToken('idle', composition?.rhythm_type, behavior?.adaptation_style),
-      stress: buildMotionToken('stress', composition?.rhythm_type, behavior?.stress_state != null ? 'harden' : 'adapt'),
+      stress: buildMotionToken(
+        'stress',
+        composition?.rhythm_type,
+        behavior?.stress_state != null ? 'harden' : 'adapt',
+      ),
     },
     material: [],
     spacing: TOKEN_DEFAULTS.spacing,
@@ -52,30 +56,56 @@ export function profileToTokens(profile: NacreProfile, seed: number = 42): Nacre
 // ─── Internal builders ───────────────────────────────────────────────────────
 
 function buildSurfaceColors(axes: readonly SemanticAxis[]): readonly ColorToken[] {
-  const warmthAxis = axes.find(a => a.axis_id.includes('warm') || a.axis_id.includes('temperature'));
-  const luminosityAxis = axes.find(a => a.axis_id.includes('light') || a.axis_id.includes('luminosity'));
+  const warmthAxis = axes.find(
+    (a) => a.axis_id.includes('warm') || a.axis_id.includes('temperature'),
+  );
+  const luminosityAxis = axes.find(
+    (a) => a.axis_id.includes('light') || a.axis_id.includes('luminosity'),
+  );
 
   const hue = warmthAxis ? lerp(200, 340, warmthAxis.position) : 210;
   const lightness = luminosityAxis ? lerp(10, 95, luminosityAxis.position) : 96;
 
   return [
-    { cssVar: '--nacre-color-surface-0', value: `hsl(${hue} 15% ${lightness}%)`, sourceAxis: warmthAxis?.axis_id ?? 'default' },
-    { cssVar: '--nacre-color-surface-1', value: `hsl(${hue} 20% ${Math.max(lightness - 6, 5)}%)`, sourceAxis: warmthAxis?.axis_id ?? 'default' },
-    { cssVar: '--nacre-color-surface-2', value: `hsl(${hue} 25% ${Math.max(lightness - 12, 5)}%)`, sourceAxis: warmthAxis?.axis_id ?? 'default' },
+    {
+      cssVar: '--nacre-color-surface-0',
+      value: `hsl(${hue} 15% ${lightness}%)`,
+      sourceAxis: warmthAxis?.axis_id ?? 'default',
+    },
+    {
+      cssVar: '--nacre-color-surface-1',
+      value: `hsl(${hue} 20% ${Math.max(lightness - 6, 5)}%)`,
+      sourceAxis: warmthAxis?.axis_id ?? 'default',
+    },
+    {
+      cssVar: '--nacre-color-surface-2',
+      value: `hsl(${hue} 25% ${Math.max(lightness - 12, 5)}%)`,
+      sourceAxis: warmthAxis?.axis_id ?? 'default',
+    },
   ];
 }
 
 function buildAccentColors(axes: readonly SemanticAxis[]): readonly ColorToken[] {
-  const vibrancyAxis = axes.find(a => a.axis_id.includes('vibrant') || a.axis_id.includes('saturated'));
+  const vibrancyAxis = axes.find(
+    (a) => a.axis_id.includes('vibrant') || a.axis_id.includes('saturated'),
+  );
   const saturation = vibrancyAxis ? lerp(20, 90, vibrancyAxis.position) : 60;
 
   return [
-    { cssVar: '--nacre-color-accent-primary', value: `hsl(290 ${saturation}% 55%)`, sourceAxis: vibrancyAxis?.axis_id ?? 'default' },
-    { cssVar: '--nacre-color-accent-secondary', value: `hsl(180 ${saturation * 0.7}% 50%)`, sourceAxis: vibrancyAxis?.axis_id ?? 'default' },
+    {
+      cssVar: '--nacre-color-accent-primary',
+      value: `hsl(290 ${saturation}% 55%)`,
+      sourceAxis: vibrancyAxis?.axis_id ?? 'default',
+    },
+    {
+      cssVar: '--nacre-color-accent-secondary',
+      value: `hsl(180 ${saturation * 0.7}% 50%)`,
+      sourceAxis: vibrancyAxis?.axis_id ?? 'default',
+    },
   ];
 }
 
-function buildTextColors(axes: readonly SemanticAxis[]): readonly ColorToken[] {
+function buildTextColors(_axes: readonly SemanticAxis[]): readonly ColorToken[] {
   return [
     { cssVar: '--nacre-color-text-primary', value: 'hsl(240 10% 12%)', sourceAxis: 'default' },
     { cssVar: '--nacre-color-text-secondary', value: 'hsl(240 8% 40%)', sourceAxis: 'default' },
@@ -83,7 +113,7 @@ function buildTextColors(axes: readonly SemanticAxis[]): readonly ColorToken[] {
   ];
 }
 
-function buildBorderColors(axes: readonly SemanticAxis[]): readonly ColorToken[] {
+function buildBorderColors(_axes: readonly SemanticAxis[]): readonly ColorToken[] {
   return [
     { cssVar: '--nacre-color-border-subtle', value: 'hsl(240 10% 88%)', sourceAxis: 'default' },
     { cssVar: '--nacre-color-border-strong', value: 'hsl(240 10% 60%)', sourceAxis: 'default' },
@@ -91,8 +121,14 @@ function buildBorderColors(axes: readonly SemanticAxis[]): readonly ColorToken[]
 }
 
 const RHYTHM_DURATION: Record<string, number> = {
-  pulse: 200, wave: 400, lattice: 300, path: 500,
-  bloom: 600, stutter: 150, drift: 800, cascade: 350,
+  pulse: 200,
+  wave: 400,
+  lattice: 300,
+  path: 500,
+  bloom: 600,
+  stutter: 150,
+  drift: 800,
+  cascade: 350,
 };
 
 const ADAPTATION_EASING: Record<string, string> = {
@@ -115,7 +151,9 @@ function buildMotionToken(
 ): MotionToken {
   const baseDuration = rhythmType ? (RHYTHM_DURATION[rhythmType] ?? 300) : 300;
   const multiplier = role === 'exit' ? 0.75 : role === 'stress' ? 0.5 : 1;
-  const easing = adaptationStyle ? (ADAPTATION_EASING[adaptationStyle] ?? ADAPTATION_EASING['adapt']) : ADAPTATION_EASING['adapt'];
+  const easing = adaptationStyle
+    ? (ADAPTATION_EASING[adaptationStyle] ?? ADAPTATION_EASING['adapt'])
+    : ADAPTATION_EASING['adapt'];
 
   return {
     cssVar: `--nacre-motion-${role}-duration`,

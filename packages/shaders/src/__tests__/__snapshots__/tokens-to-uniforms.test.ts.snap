@@ -1,0 +1,20 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`tokensToNacrePearlBloomUniforms — snapshot regression > matches nacre-gate token slice snapshot 1`] = `
+{
+  "u_accentColor": [
+    0.5218645946969315,
+    0.08015731553932502,
+    0.6626165904532368,
+  ],
+  "u_baseColor": [
+    0.9065779556099355,
+    0.9184803760635993,
+    0.9304675278470897,
+  ],
+  "u_intensity": 0.449910763699649,
+  "u_iridescence": 0.761825880337461,
+  "u_reducedMotion": 0,
+  "u_shimmerOpacity": 0.12,
+}
+`;

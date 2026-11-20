@@ -23,13 +23,17 @@ import { NACRE_PEARL_BLOOM_DEFAULTS } from '../presets/nacre-pearl-bloom.js';
 export interface TokenSetSlice {
   readonly color: {
     readonly surface: ReadonlyArray<{ readonly value: string; readonly cssVar: string }>;
-    readonly accent:  ReadonlyArray<{ readonly value: string; readonly cssVar: string }>;
-    readonly text:    ReadonlyArray<{ readonly value: string; readonly cssVar: string }>;
-    readonly border:  ReadonlyArray<{ readonly value: string; readonly cssVar: string }>;
+    readonly accent: ReadonlyArray<{ readonly value: string; readonly cssVar: string }>;
+    readonly text: ReadonlyArray<{ readonly value: string; readonly cssVar: string }>;
+    readonly border: ReadonlyArray<{ readonly value: string; readonly cssVar: string }>;
   };
   readonly motion: {
-    readonly enter: { readonly duration: number; readonly easing: string; readonly sourceRhythm: string };
-    readonly idle:  { readonly duration: number };
+    readonly enter: {
+      readonly duration: number;
+      readonly easing: string;
+      readonly sourceRhythm: string;
+    };
+    readonly idle: { readonly duration: number };
   };
 }
 
@@ -41,20 +45,22 @@ export interface TokenSetSlice {
 
 function hslToLinearRgb(hsl: string): readonly [number, number, number] {
   // Parse "hsl(H S% L%)" or "hsl(H S L)" (modern CSS space-separated)
-  const m = hsl.match(
-    /hsl\(\s*([\d.]+)\s+([\d.]+)%?\s+([\d.]+)%?\s*\)/,
-  );
+  const m = hsl.match(/hsl\(\s*([\d.]+)\s+([\d.]+)%?\s+([\d.]+)%?\s*\)/);
   if (!m) return NACRE_PEARL_BLOOM_DEFAULTS.u_baseColor;
 
-  const h = parseFloat(m[1]!) / 360;
-  const s = parseFloat(m[2]!) / 100;
-  const l = parseFloat(m[3]!) / 100;
+  const [, hRaw, sRaw, lRaw] = m;
+  if (hRaw === undefined || sRaw === undefined || lRaw === undefined) {
+    return NACRE_PEARL_BLOOM_DEFAULTS.u_baseColor;
+  }
+  const h = parseFloat(hRaw) / 360;
+  const s = parseFloat(sRaw) / 100;
+  const l = parseFloat(lRaw) / 100;
 
   // HSL -> sRGB
   const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
   const p = 2 * l - q;
   const hue2rgb = (t: number): number => {
-    let tt = t < 0 ? t + 1 : t > 1 ? t - 1 : t;
+    const tt = t < 0 ? t + 1 : t > 1 ? t - 1 : t;
     if (tt < 1 / 6) return p + (q - p) * 6 * tt;
     if (tt < 1 / 2) return q;
     if (tt < 2 / 3) return p + (q - p) * (2 / 3 - tt) * 6;
@@ -97,10 +103,10 @@ export function tokensToNacrePearlBloomUniforms(
   },
 ): NacrePearlBloomUniforms {
   const surfaceColor = tokens.color.surface[0]?.value ?? 'hsl(200 15% 96%)';
-  const accentColor  = tokens.color.accent[0]?.value  ?? 'hsl(290 60% 55%)';
+  const accentColor = tokens.color.accent[0]?.value ?? 'hsl(290 60% 55%)';
 
-  const baseColor   = hslToLinearRgb(surfaceColor);
-  const accentRgb   = hslToLinearRgb(accentColor);
+  const baseColor = hslToLinearRgb(surfaceColor);
+  const accentRgb = hslToLinearRgb(accentColor);
 
   // Derive intensity from accent saturation:
   // orchid accent has high saturation — we use the R/B ratio as a proxy
@@ -114,14 +120,14 @@ export function tokensToNacrePearlBloomUniforms(
   const intensity = Math.min(1, Math.max(0, 1 - surfaceLuminance * 0.6));
 
   return {
-    u_time:           runtimeOverrides?.u_time           ?? 0,
-    u_resolution:     runtimeOverrides?.u_resolution     ?? [1, 1],
-    u_pointer:        runtimeOverrides?.u_pointer        ?? [0.5, 0.5],
-    u_reducedMotion:  runtimeOverrides?.u_reducedMotion  ?? 0,
-    u_intensity:      intensity,
-    u_iridescence:    iridescence,
+    u_time: runtimeOverrides?.u_time ?? 0,
+    u_resolution: runtimeOverrides?.u_resolution ?? [1, 1],
+    u_pointer: runtimeOverrides?.u_pointer ?? [0.5, 0.5],
+    u_reducedMotion: runtimeOverrides?.u_reducedMotion ?? 0,
+    u_intensity: intensity,
+    u_iridescence: iridescence,
     u_shimmerOpacity: 0.12, // nacre-effect-shimmer-opacity token default
-    u_baseColor:      baseColor,
-    u_accentColor:    accentRgb,
+    u_baseColor: baseColor,
+    u_accentColor: accentRgb,
   };
 }
