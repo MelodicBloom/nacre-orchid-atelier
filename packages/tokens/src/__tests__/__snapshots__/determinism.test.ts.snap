@@ -1,0 +1,134 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`profileToTokens — snapshot regression > matches the nacre-gate seed-42 snapshot 1`] = `
+{
+  "color": {
+    "accent": [
+      {
+        "cssVar": "--nacre-color-accent-primary",
+        "sourceAxis": "default",
+        "value": "hsl(290 60% 55%)",
+      },
+      {
+        "cssVar": "--nacre-color-accent-secondary",
+        "sourceAxis": "default",
+        "value": "hsl(180 42% 50%)",
+      },
+    ],
+    "border": [
+      {
+        "cssVar": "--nacre-color-border-subtle",
+        "sourceAxis": "default",
+        "value": "hsl(240 10% 88%)",
+      },
+      {
+        "cssVar": "--nacre-color-border-strong",
+        "sourceAxis": "default",
+        "value": "hsl(240 10% 60%)",
+      },
+    ],
+    "surface": [
+      {
+        "cssVar": "--nacre-color-surface-0",
+        "sourceAxis": "default",
+        "value": "hsl(210 15% 96%)",
+      },
+      {
+        "cssVar": "--nacre-color-surface-1",
+        "sourceAxis": "default",
+        "value": "hsl(210 20% 90%)",
+      },
+      {
+        "cssVar": "--nacre-color-surface-2",
+        "sourceAxis": "default",
+        "value": "hsl(210 25% 84%)",
+      },
+    ],
+    "text": [
+      {
+        "cssVar": "--nacre-color-text-primary",
+        "sourceAxis": "default",
+        "value": "hsl(240 10% 12%)",
+      },
+      {
+        "cssVar": "--nacre-color-text-secondary",
+        "sourceAxis": "default",
+        "value": "hsl(240 8% 40%)",
+      },
+      {
+        "cssVar": "--nacre-color-text-inverse",
+        "sourceAxis": "default",
+        "value": "hsl(0 0% 98%)",
+      },
+    ],
+  },
+  "elevation": {
+    "shadow-lg": "0 10px 15px -3px hsl(240 10% 12% / 0.1), 0 4px 6px -4px hsl(240 10% 12% / 0.1)",
+    "shadow-material": "0 0 0 1px hsl(240 10% 88%), 0 8px 32px hsl(290 40% 55% / 0.15)",
+    "shadow-md": "0 4px 6px -1px hsl(240 10% 12% / 0.1), 0 2px 4px -2px hsl(240 10% 12% / 0.1)",
+    "shadow-sm": "0 1px 2px 0 hsl(240 10% 12% / 0.05)",
+    "shadow-xl": "0 20px 25px -5px hsl(240 10% 12% / 0.1), 0 8px 10px -6px hsl(240 10% 12% / 0.1)",
+  },
+  "material": [],
+  "motion": {
+    "enter": {
+      "cssVar": "--nacre-motion-enter-duration",
+      "duration": 600,
+      "easing": "cubic-bezier(0, 0, 0.2, 1)",
+      "sourceRhythm": "bloom",
+    },
+    "exit": {
+      "cssVar": "--nacre-motion-exit-duration",
+      "duration": 450,
+      "easing": "cubic-bezier(0, 0, 0.2, 1)",
+      "sourceRhythm": "bloom",
+    },
+    "idle": {
+      "cssVar": "--nacre-motion-idle-duration",
+      "duration": 600,
+      "easing": "cubic-bezier(0, 0, 0.2, 1)",
+      "sourceRhythm": "bloom",
+    },
+    "stress": {
+      "cssVar": "--nacre-motion-stress-duration",
+      "duration": 300,
+      "easing": "cubic-bezier(0.4, 0, 1, 1)",
+      "sourceRhythm": "bloom",
+    },
+  },
+  "profileId": "nacre-gate",
+  "profileVersion": "1.0.0",
+  "seed": 42,
+  "spacing": {
+    "0": "0px",
+    "1": "4px",
+    "10": "40px",
+    "12": "48px",
+    "16": "64px",
+    "2": "8px",
+    "20": "80px",
+    "24": "96px",
+    "3": "12px",
+    "4": "16px",
+    "5": "20px",
+    "6": "24px",
+    "8": "32px",
+  },
+  "typography": {
+    "font-display": "'Playfair Display Variable', Georgia, serif",
+    "font-mono": "'JetBrains Mono Variable', 'Fira Code', monospace",
+    "font-sans": "'Inter Variable', system-ui, -apple-system, sans-serif",
+    "leading-normal": "1.5",
+    "leading-relaxed": "1.75",
+    "leading-tight": "1.25",
+    "size-2xl": "1.5rem",
+    "size-3xl": "1.875rem",
+    "size-4xl": "2.25rem",
+    "size-base": "1rem",
+    "size-lg": "1.125rem",
+    "size-sm": "0.875rem",
+    "size-xl": "1.25rem",
+    "size-xs": "0.75rem",
+  },
+}
+`;

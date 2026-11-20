@@ -267,7 +267,6 @@ const sd = new StyleDictionary({
     // — CSS custom properties
     css: {
       transformGroup: 'css',
-      prefix: 'nacre',
       buildPath: `${DIST}/`,
       files: [
         {

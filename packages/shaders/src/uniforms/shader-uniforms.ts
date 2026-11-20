@@ -7,7 +7,7 @@
  * - Serialising uniform objects for WebGL upload
  */
 
-import type { BaseUniforms, NacrePearlBloomUniforms } from '../shader-types.js';
+import type { NacrePearlBloomUniforms } from '../shader-types.js';
 import { NACRE_PEARL_BLOOM_DEFAULTS } from '../presets/nacre-pearl-bloom.js';
 
 // ── Merge helpers ───────────────────────────────────────────────────────────
@@ -32,24 +32,20 @@ export function clampColor(
 }
 
 /** Clamp a vec2 pointer to [0, 1]. */
-export function clampPointer(
-  p: readonly [number, number],
-): readonly [number, number] {
+export function clampPointer(p: readonly [number, number]): readonly [number, number] {
   return [clamp01(p[0]), clamp01(p[1])];
 }
 
 /** Validate and clamp all range-bounded uniforms in NacrePearlBloomUniforms. */
-export function clampNacrePearlBloomUniforms(
-  u: NacrePearlBloomUniforms,
-): NacrePearlBloomUniforms {
+export function clampNacrePearlBloomUniforms(u: NacrePearlBloomUniforms): NacrePearlBloomUniforms {
   return {
     ...u,
-    u_pointer:        clampPointer(u.u_pointer),
-    u_intensity:      clamp01(u.u_intensity),
-    u_iridescence:    clamp01(u.u_iridescence),
+    u_pointer: clampPointer(u.u_pointer),
+    u_intensity: clamp01(u.u_intensity),
+    u_iridescence: clamp01(u.u_iridescence),
     u_shimmerOpacity: clamp01(u.u_shimmerOpacity),
-    u_baseColor:      clampColor(u.u_baseColor),
-    u_accentColor:    clampColor(u.u_accentColor),
-    u_reducedMotion:  clamp01(u.u_reducedMotion),
+    u_baseColor: clampColor(u.u_baseColor),
+    u_accentColor: clampColor(u.u_accentColor),
+    u_reducedMotion: clamp01(u.u_reducedMotion),
   };
 }

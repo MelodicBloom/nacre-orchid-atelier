@@ -5,7 +5,7 @@
  */
 
 import { readFile } from 'node:fs/promises';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { join, dirname } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -13,10 +13,10 @@ const root = join(__dirname, '..');
 
 async function main() {
   const fixturePath = join(root, 'fixtures', 'example-profile.json');
-  const validatorPath = join(root, 'dist', 'pipeline', 'validate-profile.js');
+  const validatorPath = join(root, 'dist', 'index.js');
 
   const [{ validateProfile }, raw] = await Promise.all([
-    import(validatorPath),
+    import(pathToFileURL(validatorPath).href),
     readFile(fixturePath, 'utf8'),
   ]);
 
@@ -25,7 +25,7 @@ async function main() {
 
   if (!result.valid) {
     console.error('Example profile failed validation:');
-    result.errors?.forEach(e => console.error(' -', e));
+    result.errors?.forEach((e) => console.error(' -', e));
     process.exit(1);
   }
 
@@ -35,7 +35,7 @@ async function main() {
   console.log('  Version:', profile.version ?? profile.metadata?.inquiry_version);
 }
 
-main().catch(err => {
+main().catch((err) => {
   console.error(err);
   process.exit(1);
 });
