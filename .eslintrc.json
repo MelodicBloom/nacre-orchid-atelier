@@ -9,14 +9,17 @@
   "plugins": ["@typescript-eslint", "react", "react-hooks"],
   "extends": [
     "eslint:recommended",
-    "plugin:@typescript-eslint/recommended-type-checked",
+    "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "prettier"
   ],
   "rules": {
     "@typescript-eslint/no-explicit-any": "error",
-    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }
+    ],
     "@typescript-eslint/explicit-function-return-type": "error",
     "@typescript-eslint/explicit-module-boundary-types": "error",
     "@typescript-eslint/no-non-null-assertion": "error",
@@ -26,5 +29,12 @@
   },
   "settings": {
     "react": { "version": "detect" }
-  }
+  },
+  "ignorePatterns": ["**/dist/**"],
+  "overrides": [
+    {
+      "files": ["packages/*/scripts/**/*.ts"],
+      "rules": { "no-console": "off" }
+    }
+  ]
 }

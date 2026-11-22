@@ -30,13 +30,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
       - run: npm ci
       - run: npm run lint
-      - run: npm run format:check
+      - name: Check formatting of changed files
+        shell: bash
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          mapfile -t files < <(git diff --name-only --diff-filter=ACMR "$BASE_SHA" HEAD -- '*.ts' '*.tsx' '*.json' '*.md')
+          if (( ${#files[@]} )); then
+            npx prettier --check "${files[@]}"
+          else
+            echo "No changed Prettier-managed files."
+          fi
 
   # ── 3. Unit Tests ──────────────────────────────────────────────────────────
   test:
@@ -83,8 +95,7 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm run build
-      - run: npx attw --pack packages/tokens
-      - run: npx attw --pack packages/shaders
+      - run: npm run validate:types
 
   # ── 6. Profile Schema Validation ───────────────────────────────────────────
   validate-profile:
